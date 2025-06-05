@@ -1,33 +1,34 @@
-import random
+# 簡単な選択式クイズプログラム
 
-# ダミーの男性野球選手名リスト（実在しそうな名前）
-names = [
-    "Shohei Ohtani", "Aaron Judge", "Mike Trout", "Bryce Harper", "Vladimir Guerrero Jr.",
-    "Fernando Tatis Jr.", "Juan Soto", "Ronald Acuña Jr.", "Mookie Betts", "Freddie Freeman",
-    "Yordan Alvarez", "Jose Ramirez", "Rafael Devers", "Pete Alonso", "Corey Seager",
-    "Kyle Schwarber", "Matt Olson", "Paul Goldschmidt", "Nolan Arenado", "Manny Machado",
-    "Trea Turner", "Francisco Lindor", "Bo Bichette", "Julio Rodriguez", "Jose Altuve",
-    "Alex Bregman", "George Springer", "Anthony Rizzo", "Giancarlo Stanton", "Javier Baez",
-    "Xander Bogaerts", "Christian Yelich", "Cody Bellinger", "Joey Gallo", "Teoscar Hernandez",
-    "Eugenio Suarez", "Josh Donaldson", "Nelson Cruz", "J.D. Martinez", "Tim Anderson",
-    "Dansby Swanson", "Ozzie Albies", "Willson Contreras", "Salvador Perez", "Whit Merrifield",
-    "Charlie Blackmon", "Max Muncy", "Hunter Renfroe", "Brandon Lowe", "Austin Riley"
+quiz = [
+    {
+        "question": "100m走の世界記録保持者は誰？",
+        "choices": ["1. ウサイン・ボルト", "2. カール・ルイス", "3. ジャスティン・ガトリン", "4. アサファ・パウエル"],
+        "answer": 1
+    },
+    {
+        "question": "野球で1試合に必要なアウトの数（片方のチーム）は？",
+        "choices": ["1. 9", "2. 18", "3. 27", "4. 36"],
+        "answer": 3
+    },
+    {
+        "question": "サッカーのフィールドにいる選手の人数（1チーム）は？",
+        "choices": ["1. 7", "2. 9", "3. 10", "4. 11"],
+        "answer": 4
+    }
 ]
 
-# 50人分の選手データ生成
-players = []
-for i in range(50):
-    name = names[i % len(names)]
-    homeruns = random.randint(10, 30)
-    players.append({
-        "name": name,
-        "homeruns": homeruns
-    })
+score = 0
 
-# ホームラン数が多い順（降順）に並び替え
-players_sorted = sorted(players, key=lambda x: x["homeruns"], reverse=True)
+for idx, q in enumerate(quiz, 1):
+    print(f"Q{idx}: {q['question']}")
+    for choice in q["choices"]:
+        print(choice)
+    ans = input("番号で答えてください: ")
+    if ans.isdigit() and int(ans) == q["answer"]:
+        print("正解！\n")
+        score += 1
+    else:
+        print(f"不正解。正解は {q['choices'][q['answer']-1]} です。\n")
 
-# 結果表示
-print(f"{'順位':<4} {'名前':<25} {'ホームラン数':<10}")
-for idx, player in enumerate(players_sorted, 1):
-    print(f"{idx:<4} {player['name']:<25} {player['homeruns']:<10}")
+print(f"あなたの正解数: {score} / {len(quiz)}")
